@@ -37,9 +37,7 @@ public class Game {
             case SCISSORS_ID:
                 result = computerTurn == PAPER_ID ? RESULT_WIN : RESULT_FAIL;
         }
-
         statistics.recordTurn(userTurn, result);
-
         return
                 new Result(
                         codeToName(userTurn),

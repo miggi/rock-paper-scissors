@@ -1,8 +1,9 @@
 package com.mygryn;
 
-import java.util.ArrayList;
+import com.google.common.collect.Lists;
+import com.google.common.primitives.Ints;
+
 import java.util.List;
-import java.util.Stack;
 import java.util.stream.Collectors;
 
 import static com.mygryn.Constants.*;
@@ -13,8 +14,8 @@ public class GameStatistics {
     private Integer userWins = 0;
     private Double userWinRate = 0.0;
     private Integer gameNumber = 0;
-    private List<String> allTurns = new ArrayList<>();
-    private Stack<Integer> turnsDistributions = new Stack<>();
+    private List<String> allTurns = Lists.newArrayList();
+    private List<Integer> turnsDistributions =  Lists.newArrayList();
 
     public void print() {
         String logLine = "-------------------------------" +
@@ -42,10 +43,9 @@ public class GameStatistics {
     private void recordTurnStats(String turn) {
         allTurns.add(turn);
         if (gameNumber >= COMBINATIONS_LIMIT) {
-            List<String> lastTurns = allTurns.
-                    subList(gameNumber - COMBINATIONS_LIMIT, gameNumber);
+            List<String> lastThreeTurns = getLastTurns(COMBINATIONS_LIMIT);
 
-            String lastTurnsKey = lastTurns
+            String lastTurnsKey = lastThreeTurns
                     .stream()
                     .collect(Collectors.joining(""));
 
@@ -57,20 +57,28 @@ public class GameStatistics {
     private void recordUserWinRate(int result) {
         if (result == RESULT_WIN) {
             userWins++;
-            userWinRate = ((double) userWins / (double) gameNumber) * 100;
+            userWinRate = Math.ceil(((double) userWins / (double) gameNumber) * 100);
         } else if(result == RESULT_FAIL) {
             computerWins++;
         }
     }
 
     public int[] distributions() {
-        return turnsDistributions
-                .stream()
-                .mapToInt(Integer::intValue)
-                .toArray();
+        System.out.println("turnsDistributions -> " + turnsDistributions);
+       return Ints
+               .toArray(turnsDistributions);
     }
 
     public Integer getGameNumber() {
         return gameNumber;
+    }
+
+    public List<String> getLastTurns(int limit) {
+        int length = allTurns.size();
+        if (length > limit) {
+            return allTurns.
+                    subList(length - limit - 1, length - 1);
+        }
+        return allTurns;
     }
 }
