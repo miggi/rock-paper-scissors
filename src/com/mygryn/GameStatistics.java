@@ -64,7 +64,6 @@ public class GameStatistics {
     }
 
     public int[] distributions() {
-        System.out.println("turnsDistributions -> " + turnsDistributions);
        return Ints
                .toArray(turnsDistributions);
     }

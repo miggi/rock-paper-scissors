@@ -9,8 +9,8 @@ import static com.mygryn.Constants.*;
 
 public class Game {
 
-    private GameStatistics statistics;
-    private Learner learner;
+    private final GameStatistics statistics;
+    private final Learner learner;
 
     public Game() {
         this.statistics = new GameStatistics();
