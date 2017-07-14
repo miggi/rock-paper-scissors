@@ -1,4 +1,4 @@
-# Rock, paper, Scissors Game Implementation with Computer-winning engine
+# Rock, paper, scissors Game Implementation with Computer-winning engine
 
 That project implements game when Computer tries learn steps of the user and win the game.
 
